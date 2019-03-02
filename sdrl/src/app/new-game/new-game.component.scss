@@ -1,0 +1,21 @@
+.new-game-menu{
+    padding:15px;
+    background:#333;
+    width:400px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-200px;
+    margin-top:-100px;
+    color:#fff;
+}
+
+.new-game-shadow{
+    left:0;
+    top:0;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.3);
+    z-index:1;
+}

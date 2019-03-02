@@ -1,0 +1,8 @@
+<div class="new-game-shadow" *ngIf="!gameStarted">
+    <div class="new-game-menu">
+        <div>Enter Thine Name</div>
+          <input [(ngModel)]="playerName" type="text" maxlength="20">
+          <button (click)="startNewGame()">Start!</button>
+      </div>  
+</div>
+

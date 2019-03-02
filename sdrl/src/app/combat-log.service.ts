@@ -20,10 +20,10 @@ export class CombatLogService {
     switch(action.type)
     {
       case CombatActionTypeEnum.PlayerDamage:
-        this.lines.push(player.name + " took " + action.damageAmount + " damage from " + enemy.name + "'s attack!");
+        this.lines.push("You took " + action.damageAmount + " damage from " + enemy.name + "'s attack!");
         break;
       case CombatActionTypeEnum.EnemyDamage:
-        this.lines.push(enemy.name + " took " + action.damageAmount + " damage from " + player.name + "'s attack!");
+        this.lines.push(enemy.name + " took " + action.damageAmount + " damage from your attack!");
         break;
       case CombatActionTypeEnum.PlayerDeath:
         this.lines.push(player.name + " has fallen...");
@@ -38,6 +38,11 @@ export class CombatLogService {
         this.lines.push(player.name + " has been equipped with " + equip.name);
         break;
     }
+  }
+
+  addCustomLine(line: string): void
+  {
+    this.lines.push(line);
   }
 
   getCombatLogEntries(entries: number): string[]

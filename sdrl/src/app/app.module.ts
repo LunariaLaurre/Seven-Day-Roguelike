@@ -8,6 +8,9 @@ import { NewEquipmentComponent } from './new-equipment/new-equipment.component';
 import { EquipmentDisplayComponent } from './equipment-display/equipment-display.component';
 import { CombatLogComponent } from './combat-log/combat-log.component';
 import { EnemyStatsComponent } from './enemy-stats/enemy-stats.component';
+import { NewGameComponent } from './new-game/new-game.component';
+import { FormsModule } from '@angular/forms';
+import { CombatActionComponent } from './combat-action/combat-action.component';
 
 @NgModule({
   declarations: [
@@ -17,11 +20,14 @@ import { EnemyStatsComponent } from './enemy-stats/enemy-stats.component';
     NewEquipmentComponent,
     EquipmentDisplayComponent,
     CombatLogComponent,
-    EnemyStatsComponent
+    EnemyStatsComponent,
+    NewGameComponent,
+    CombatActionComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

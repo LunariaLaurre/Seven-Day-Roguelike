@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { EnemyModel } from '../models/enemy-model';
+import { CombatLogService } from '../combat-log.service';
+import { CombatActionModel } from '../models/combat-action-model';
+import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
 
 @Component({
   selector: 'app-enemy-stats',
@@ -8,9 +11,13 @@ import { EnemyModel } from '../models/enemy-model';
 })
 export class EnemyStatsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private combatLogService: CombatLogService
+  ) { }
 
-  public enemy;
+  @Output() damagePlayer = new EventEmitter()
+
+  public enemy: EnemyModel;
 
   ngOnInit() {
 
@@ -31,6 +38,19 @@ export class EnemyStatsComponent implements OnInit {
   public getPercentOfMax(val: number, maxval: number): string
   {
     return val/maxval * 100 + '%';
+  }
+
+  public takeDamage(damage: number)
+  {
+    this.enemy.health -= damage;
+
+    this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
+
+    setTimeout(() => {
+      let returnDamage = 50;
+      this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.PlayerDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
+      this.damagePlayer.emit(returnDamage);
+    }, 700);
   }
 
 }

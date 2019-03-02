@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerModel } from '../models/player-model';
 import { StatisticsModel } from '../models/statistics-model';
 import { EquipmentModel } from '../models/equipment-model';
@@ -20,11 +20,12 @@ export class PlayerStatsComponent implements OnInit {
     private combatLogService: CombatLogService
   ) { }
 
+  @Output() damageEnemy = new EventEmitter();
+
   public player: PlayerModel;
   public demoGear: EquipmentModel;
 
   ngOnInit() {
-      this.player = this.generateNewPlayer("Lilth");
   }
 
   public equipToPlayer(equip: EquipmentModel): void
@@ -77,16 +78,16 @@ export class PlayerStatsComponent implements OnInit {
   public getMaxHealth(player: PlayerModel): number
   {
     const stats = this.getTotalStats(player);
-    return player.baseHealth + (stats.str * 5);
+    return player.baseHealth + ((stats.str-100) * 5);
   }
 
   public getMaxMana(player: PlayerModel): number
   {
     const stats = this.getTotalStats(player);
-    return player.baseMana + (stats.int * 5);
+    return player.baseMana + ((stats.int-100) * 5);
   }
 
-  private generateNewPlayer(name: string): PlayerModel
+  public generateNewPlayer(name: string): void
   {
     const model = {
       name: name,
@@ -97,14 +98,25 @@ export class PlayerStatsComponent implements OnInit {
       maxMana: 100,
       baseMana: 100,
       stats: this.generateStatsModel(100,100,100,100),
-      equipment: this.generateNewEquipment(),
+      equipment: this.generateStartingEquipment(),
       level: 1
     } as PlayerModel
 
     model.health = model.maxHealth = this.getMaxHealth(model);
     model.mana = model.maxMana = this.getMaxMana(model);
 
-    return model;
+    this.player = model;
+  }
+
+  public playerAttack(magic: boolean)
+  {
+    let damage = 50;
+    this.damageEnemy.emit(damage);
+  }
+
+  public takeDamage(damage: number)
+  {
+    this.player.health -= damage;
   }
 
   // Regenerates max health value on gear change
@@ -126,34 +138,27 @@ export class PlayerStatsComponent implements OnInit {
     return model;
   }
 
-  private generateNewEquipment(): EquipmentModel[]
+  private generateStartingEquipment(): EquipmentModel[]
   {
     const weaponModel = {
-      name: "Sword of Lilth",
+      name: "Rusted Blade",
       damage: {
-        min:20,
-        max:30
+        min:10,
+        max:20
       } as DamageRangeModel,
       type: EquipmentTypeEnum.Weapon,
-      stats: this.generateStatsModel(20, 0, 0, 0),
+      stats: this.generateStatsModel(0, 0, 0, 0),
       rarity: RarityTypeEnum.Common
     }
 
     const armorModel = {
-      name: "Booty Shorts",
+      name: "Battered Leather Cuirass",
       type: EquipmentTypeEnum.Armor,
-      stats: this.generateStatsModel(0, 0, 0, 30),
-      rarity: RarityTypeEnum.Magic
+      stats: this.generateStatsModel(0, 0, 5, 0),
+      rarity: RarityTypeEnum.Common
     }
 
-    const accessoryModel = {
-      name: "Bell Collar",
-      type: EquipmentTypeEnum.Accessory,
-      stats: this.generateStatsModel(0, 20, 0, 0),
-      rarity: RarityTypeEnum.Legendary
-    }
-
-    return [weaponModel, armorModel, accessoryModel]; 
+    return [weaponModel, armorModel]; 
   }
 
 }

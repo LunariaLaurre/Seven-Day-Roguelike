@@ -22,8 +22,6 @@ export class NewEquipmentComponent implements OnInit {
 
   ngOnInit() {
 
-    this.equipment = this.generateRandomEquipment(3);
-
   }
 
   public equipEquipment(equip: EquipmentModel)
@@ -32,11 +30,11 @@ export class NewEquipmentComponent implements OnInit {
     this.equipment = [];
   }
 
-  public generateRandomEquipment(number: number): EquipmentModel[]
+  public generateRandomEquipment(level: number): EquipmentModel[]
   {
     let equips = [];
 
-    for(let i = 0; i < number; i++)
+    for(let i = 0; i < level; i++)
     {
       let randomStats = {
         str: Math.floor(Math.random() * 50),
