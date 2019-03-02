@@ -1,0 +1,8 @@
+<div class="equipment">
+    <div [ngStyle]="{'color':getColorForRarity(equip)}"><i class="material-icons">{{getEquipmentIcon(equip)}}</i>{{equip.name}}</div>
+    <div class="damage-range" *ngIf="equip.damage">{{equip.damage.min}} - {{equip.damage.max}} {{getEquipDamageString(equip.damage)}}</div>
+    <div class="equip-stats" *ngIf="equip.stats.str > 0">+{{equip.stats.str}} Str</div>
+    <div class="equip-stats" *ngIf="equip.stats.int > 0">+{{equip.stats.int}} Int</div>
+    <div class="equip-stats" *ngIf="equip.stats.def > 0">+{{equip.stats.def}} Def</div>
+    <div class="equip-stats" *ngIf="equip.stats.mnd > 0">+{{equip.stats.mnd}} Mnd</div>
+</div>

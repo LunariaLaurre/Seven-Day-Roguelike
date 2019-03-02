@@ -1,0 +1,44 @@
+.player-stats{
+    border:1px #111 solid;
+    padding:5px;
+    border-radius:10px;
+    margin:10px;
+    background:#333;
+    color:#ccc;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 300px;
+}
+
+.player-name{
+    font-size:30px;
+    line-height:30px;
+    margin:10px;
+}
+
+.bar-background{
+    background:#000;
+    width:200px;
+    border: 2px solid black;
+    margin:10px;
+    width:90%;
+}
+
+.health-bar{
+    background:#00ff00;
+    font-weight:bold;
+    color:#000;
+    text-align: center;
+}
+
+.mana-bar{
+    background:#00bfff;
+    font-weight:bold;
+    color:#000;
+    text-align: center;
+}
+
+
+.stats{
+    width: 50%;
+    padding:5px;
+}

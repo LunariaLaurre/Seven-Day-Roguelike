@@ -1,0 +1,32 @@
+<div *ngIf="player" class="player-stats">
+  <div class="player-name">{{ player?.name }}</div>
+  <div class="bar-background">
+    <div class="health-bar" [ngStyle]="{'width':getPercentOfMax(player.health, player.maxHealth)}">
+      {{player.health}}
+    </div>
+  </div>
+  <div class="bar-background">
+      <div class="mana-bar" [ngStyle]="{'width':getPercentOfMax(player.mana, player.maxMana)}">
+        {{player.mana}}
+      </div>
+    </div>
+  <div>
+      <div class="stats">
+          Strength: {{getTotalStats(player).str}}
+      </div>
+      <div class="stats">
+          Intelligence: {{getTotalStats(player).int}}
+      </div>
+      <div class="stats">
+          Defense: {{getTotalStats(player).def}}
+      </div>
+      <div class="stats">
+          Mind: {{getTotalStats(player).mnd}}
+      </div>
+  </div>
+  <div>
+      <div *ngFor="let equip of player.equipment">
+        <app-equipment-display [equip]="equip"></app-equipment-display>
+      </div>
+  </div>
+</div>
