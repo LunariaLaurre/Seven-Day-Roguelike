@@ -29,10 +29,10 @@ export class NewEquipmentComponent implements OnInit {
   public equipEquipment(equip: EquipmentModel)
   {
     this.equip.emit(equip);
-    this.equipment = this.generateRandomEquipment(3);
+    this.equipment = [];
   }
 
-  private generateRandomEquipment(number: number): EquipmentModel[]
+  public generateRandomEquipment(number: number): EquipmentModel[]
   {
     let equips = [];
 

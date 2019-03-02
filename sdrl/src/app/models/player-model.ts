@@ -11,4 +11,5 @@ export class PlayerModel {
     baseMana: number;
     stats: StatisticsModel;
     equipment: EquipmentModel[];
+    level: number;
 }

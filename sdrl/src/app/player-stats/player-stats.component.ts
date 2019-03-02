@@ -6,6 +6,9 @@ import { RarityTypeEnum } from '../enums/rarity-type-enum';
 import { EquipmentTypeEnum } from '../enums/equipement-type-enum';
 import { DamageRangeModel } from '../models/damage-range-model';
 import {sortBy} from 'lodash'
+import { CombatLogService } from '../combat-log.service';
+import { CombatActionModel } from '../models/combat-action-model';
+import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
 
 @Component({
   selector: 'app-player-stats',
@@ -13,7 +16,9 @@ import {sortBy} from 'lodash'
   styleUrls: ['./player-stats.component.scss']
 })
 export class PlayerStatsComponent implements OnInit {
-  constructor() { }
+  constructor(
+    private combatLogService: CombatLogService
+  ) { }
 
   public player: PlayerModel;
   public demoGear: EquipmentModel;
@@ -35,6 +40,8 @@ export class PlayerStatsComponent implements OnInit {
     this.regenerateMaxHealth(this.player);
     this.healPlayer(this.player);
     this.player.equipment = sortBy(this.player.equipment, e => e.type)
+    this.combatLogService.addCombatLine(this.player, {type: CombatActionTypeEnum.Equip} as CombatActionModel, null, equip)
+
   }
 
   public healPlayer(player: PlayerModel): void
@@ -90,8 +97,8 @@ export class PlayerStatsComponent implements OnInit {
       maxMana: 100,
       baseMana: 100,
       stats: this.generateStatsModel(100,100,100,100),
-      equipment: this.generateNewEquipment()
-
+      equipment: this.generateNewEquipment(),
+      level: 1
     } as PlayerModel
 
     model.health = model.maxHealth = this.getMaxHealth(model);

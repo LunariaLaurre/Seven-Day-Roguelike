@@ -1,3 +1,7 @@
-<div *ngFor="let equip of equipment">
-    <app-equipment-display [equip]="equip" (click)="equipEquipment(equip)" class="select-equip"></app-equipment-display>
+<div class="equipment-shadow" *ngIf="equipment.length > 0">
+    <div class="equipment-box">
+        <div *ngFor="let equip of equipment">
+            <app-equipment-display [equip]="equip" (click)="equipEquipment(equip)" class="select-equip"></app-equipment-display>
+        </div>
+    </div>
 </div>

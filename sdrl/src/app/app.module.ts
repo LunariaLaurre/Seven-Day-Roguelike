@@ -7,6 +7,7 @@ import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { NewEquipmentComponent } from './new-equipment/new-equipment.component';
 import { EquipmentDisplayComponent } from './equipment-display/equipment-display.component';
 import { CombatLogComponent } from './combat-log/combat-log.component';
+import { EnemyStatsComponent } from './enemy-stats/enemy-stats.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CombatLogComponent } from './combat-log/combat-log.component';
     PlayerStatsComponent,
     NewEquipmentComponent,
     EquipmentDisplayComponent,
-    CombatLogComponent
+    CombatLogComponent,
+    EnemyStatsComponent
   ],
   imports: [
     BrowserModule,

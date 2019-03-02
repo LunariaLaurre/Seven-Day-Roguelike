@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CombatLogService } from '../combat-log.service';
 
 @Component({
   selector: 'app-combat-log',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CombatLogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private combatLogService: CombatLogService
+  ) { }
 
   ngOnInit() {
+  }
+
+  getCombatLogLines(): string[]
+  {
+    return this.combatLogService.getCombatLogEntries(5);
   }
 
 }
