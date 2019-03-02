@@ -6,4 +6,5 @@ export class EnemyModel {
     maxHealth: number;
     stats: StatisticsModel;
     exp: number;
+    level: number;
 }

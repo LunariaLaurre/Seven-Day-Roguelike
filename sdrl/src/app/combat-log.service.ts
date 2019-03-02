@@ -29,7 +29,7 @@ export class CombatLogService {
         this.lines.push(player.name + " has fallen...");
         break;
       case CombatActionTypeEnum.EnemyDeath:
-        this.lines.push(player.name + " has been slain! " + player.name + " gains " + enemy.exp + " experience!");
+        this.lines.push(enemy.name + " has been slain! You gain " + enemy.exp + " experience!");
         break;
       case CombatActionTypeEnum.Level:
         this.lines.push(player.name + " has ascended to level " + player.level);

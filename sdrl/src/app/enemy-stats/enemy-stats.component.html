@@ -1,5 +1,5 @@
 <div *ngIf="enemy" class="enemy-stats">
-    <div class="enemy-name">{{ enemy.name }}</div>
+    <div class="enemy-name">Lv. {{enemy.level}} {{ enemy.name }}</div>
     <div class="bar-background">
       <div class="health-bar" [ngStyle]="{'width':getPercentOfMax(enemy.health, enemy.maxHealth)}">
         {{enemy.health}}

@@ -13,7 +13,7 @@ export class ScoreService {
   initiateNewGame()
   {
     this.totalScore = 0;
-    this.progressLevel = 0;
+    this.progressLevel = 1;
   }
 
   getCurrentScore(): number

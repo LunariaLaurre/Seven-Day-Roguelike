@@ -9,6 +9,7 @@ import {sortBy} from 'lodash'
 import { CombatLogService } from '../combat-log.service';
 import { CombatActionModel } from '../models/combat-action-model';
 import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
+import { ScoreService } from '../score.service';
 
 @Component({
   selector: 'app-player-stats',
@@ -17,7 +18,8 @@ import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
 })
 export class PlayerStatsComponent implements OnInit {
   constructor(
-    private combatLogService: CombatLogService
+    private combatLogService: CombatLogService,
+    private scoreService: ScoreService
   ) { }
 
   @Output() damageEnemy = new EventEmitter();
@@ -38,27 +40,35 @@ export class PlayerStatsComponent implements OnInit {
     }
 
     this.player.equipment.push(equip);
-    this.regenerateMaxHealth(this.player);
-    this.healPlayer(this.player);
+    this.regenerateMaxHealth();
+    this.healPlayer();
     this.player.equipment = sortBy(this.player.equipment, e => e.type)
     this.combatLogService.addCombatLine(this.player, {type: CombatActionTypeEnum.Equip} as CombatActionModel, null, equip)
 
   }
 
-  public healPlayer(player: PlayerModel): void
+  public healPlayer(): void
   {
-    player.health = player.maxHealth;
-    player.mana = player.maxMana;
+    if(this.player)
+    {
+      this.player.health = this.player.maxHealth;
+      this.player.mana = this.player.maxMana;
+    }
   }
 
-  public getTotalStats(player: PlayerModel): StatisticsModel
+  public getTotalStats(player?: PlayerModel): StatisticsModel
   {
+    if(!player)
+    {
+      player = this.player;
+    }
+
     let stats = {
       str: player.stats.str,
       int: player.stats.int,
       def: player.stats.def,
       mnd: player.stats.mnd
-     } as StatisticsModel
+      } as StatisticsModel
 
     for(const equip of player.equipment)
     {
@@ -68,6 +78,7 @@ export class PlayerStatsComponent implements OnInit {
       stats.mnd += equip.stats.mnd;
     }
     return stats;
+   
   }
 
   public getPercentOfMax(val: number, maxval: number): string
@@ -77,14 +88,20 @@ export class PlayerStatsComponent implements OnInit {
 
   public getMaxHealth(player: PlayerModel): number
   {
-    const stats = this.getTotalStats(player);
-    return player.baseHealth + ((stats.str-100) * 5);
+    if(player)
+    {
+      const stats = this.getTotalStats(player);
+      return player.baseHealth + ((stats.str-100) * 5);
+    }
   }
 
   public getMaxMana(player: PlayerModel): number
   {
-    const stats = this.getTotalStats(player);
-    return player.baseMana + ((stats.int-100) * 5);
+    if(player)
+    {
+      const stats = this.getTotalStats(player);
+      return player.baseMana + ((stats.int-100) * 5);
+    }
   }
 
   public generateNewPlayer(name: string): void
@@ -119,11 +136,45 @@ export class PlayerStatsComponent implements OnInit {
     this.player.health -= damage;
   }
 
-  // Regenerates max health value on gear change
-  private regenerateMaxHealth(player: PlayerModel): void
+  public getClassLevelString(): string
   {
-    player.maxHealth = this.getMaxHealth(player);
-    player.maxMana = this.getMaxMana(player);
+    let classString = "Acolyte";
+
+    if(this.getTotalStats().str > this.getTotalStats().def
+      && this.getTotalStats().str > this.getTotalStats().int
+      && this.getTotalStats().str > this.getTotalStats().mnd)
+      {
+        classString = "Warrior";
+      }
+    if(this.getTotalStats().int > this.getTotalStats().def
+      && this.getTotalStats().int > this.getTotalStats().str
+      && this.getTotalStats().int > this.getTotalStats().mnd)
+      {
+        classString = "Mage";
+      }
+    if(this.getTotalStats().def > this.getTotalStats().str
+      && this.getTotalStats().def > this.getTotalStats().int
+      && this.getTotalStats().def > this.getTotalStats().mnd)
+      {
+        classString = "Paladin";
+      }
+    if(this.getTotalStats().mnd > this.getTotalStats().def
+      && this.getTotalStats().mnd > this.getTotalStats().int
+      && this.getTotalStats().mnd > this.getTotalStats().str)
+      {
+        classString = "Monk";
+      }
+    return "Lv." + this.scoreService.getCurrentProgressLevel() + " " + classString;
+  }
+
+  // Regenerates max health value on gear change
+  private regenerateMaxHealth(): void
+  {
+    if(this.player)
+    {
+      this.player.maxHealth = this.getMaxHealth(this.player);
+      this.player.maxMana = this.getMaxMana(this.player);
+    }
   }
 
   private generateStatsModel(str: number, int: number, def: number, mnd: number): StatisticsModel

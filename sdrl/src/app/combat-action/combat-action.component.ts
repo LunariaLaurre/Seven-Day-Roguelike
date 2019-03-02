@@ -19,14 +19,20 @@ private attackEnabled = true;
 
   playerAttacks()
   {
-    this.attack.emit(null);
-    this.attackEnabled = false;
+    if(this.attackEnabled)
+    {
+      this.attack.emit(null);
+      this.attackEnabled = false;
+    }
   }
 
   playerCasts()
   {
-    this.cast.emit(null);
-    this.attackEnabled = false;
+    if(this.attackEnabled)
+    {
+      this.cast.emit(null);
+      this.attackEnabled = false;
+    }
   }
 
   reEnableAttack()

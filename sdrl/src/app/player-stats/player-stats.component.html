@@ -1,5 +1,6 @@
 <div *ngIf="player" class="player-stats">
-  <div class="player-name">{{ player?.name }}</div>
+  <div class="player-name">{{ player.name }}</div>
+  <div class="player-level">{{getClassLevelString()}}</div>
   <div class="bar-background">
     <div class="health-bar" [ngStyle]="{'width':getPercentOfMax(player.health, player.maxHealth)}">
       {{player.health}}
@@ -12,16 +13,16 @@
     </div>
   <div>
       <div class="stats">
-          Strength: {{getTotalStats(player).str}}
+          Strength: {{getTotalStats().str}}
       </div>
       <div class="stats">
-          Intelligence: {{getTotalStats(player).int}}
+          Intelligence: {{getTotalStats().int}}
       </div>
       <div class="stats">
-          Defense: {{getTotalStats(player).def}}
+          Defense: {{getTotalStats().def}}
       </div>
       <div class="stats">
-          Mind: {{getTotalStats(player).mnd}}
+          Mind: {{getTotalStats().mnd}}
       </div>
   </div>
   <div>

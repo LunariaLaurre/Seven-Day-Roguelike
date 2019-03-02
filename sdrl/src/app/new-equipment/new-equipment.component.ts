@@ -30,11 +30,11 @@ export class NewEquipmentComponent implements OnInit {
     this.equipment = [];
   }
 
-  public generateRandomEquipment(level: number): EquipmentModel[]
+  public generateRandomEquipment(level: number): void
   {
     let equips = [];
 
-    for(let i = 0; i < level; i++)
+    for(let i = 0; i < 3; i++)
     {
       let randomStats = {
         str: Math.floor(Math.random() * 50),
@@ -63,7 +63,7 @@ export class NewEquipmentComponent implements OnInit {
   
       equips.push(newEquip);
     }
-    return equips;
+    this.equipment =  equips;
   }
 
 }
