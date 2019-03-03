@@ -17,6 +17,7 @@ export class NewGameComponent implements OnInit {
   public playerName: string;
   public gameStarted = false;
   public gameOver = false;
+  public youWin = false;
   public name = '';
 
   @Output() startGame = new EventEmitter();
