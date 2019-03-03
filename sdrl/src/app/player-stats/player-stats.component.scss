@@ -31,17 +31,19 @@
 }
 
 .health-bar{
-    background:#00ff00;
+    background:#007700;
     font-weight:bold;
-    color:#000;
+    color:#fff;
     text-align: center;
+    transition: all 0.5s ease;
 }
 
 .mana-bar{
-    background:#00bfff;
+    background:#4453aa;
     font-weight:bold;
-    color:#000;
+    color:#fff;
     text-align: center;
+    transition: all 0.5s ease;
 }
 
 
