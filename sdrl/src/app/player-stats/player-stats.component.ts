@@ -5,7 +5,7 @@ import { EquipmentModel } from '../models/equipment-model';
 import { RarityTypeEnum } from '../enums/rarity-type-enum';
 import { EquipmentTypeEnum } from '../enums/equipement-type-enum';
 import { DamageRangeModel } from '../models/damage-range-model';
-import {sortBy} from 'lodash'
+import {sortBy, find} from 'lodash'
 import { CombatLogService } from '../combat-log.service';
 import { CombatActionModel } from '../models/combat-action-model';
 import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
@@ -23,6 +23,7 @@ export class PlayerStatsComponent implements OnInit {
   ) { }
 
   @Output() damageEnemy = new EventEmitter();
+  @Output() playerDies = new EventEmitter();
 
   public player: PlayerModel;
   public demoGear: EquipmentModel;
@@ -41,7 +42,6 @@ export class PlayerStatsComponent implements OnInit {
 
     this.player.equipment.push(equip);
     this.regenerateMaxHealth();
-    this.healPlayer();
     this.player.equipment = sortBy(this.player.equipment, e => e.type)
     this.combatLogService.addCombatLine(this.player, {type: CombatActionTypeEnum.Equip} as CombatActionModel, null, equip)
 
@@ -91,7 +91,7 @@ export class PlayerStatsComponent implements OnInit {
     if(player)
     {
       const stats = this.getTotalStats(player);
-      return player.baseHealth + ((stats.str-100) * 5);
+      return player.baseHealth + ((stats.str) * 5);
     }
   }
 
@@ -100,7 +100,7 @@ export class PlayerStatsComponent implements OnInit {
     if(player)
     {
       const stats = this.getTotalStats(player);
-      return player.baseMana + ((stats.int-100) * 5);
+      return player.baseMana + ((stats.int) * 5);
     }
   }
 
@@ -114,7 +114,7 @@ export class PlayerStatsComponent implements OnInit {
       mana: 100,
       maxMana: 100,
       baseMana: 100,
-      stats: this.generateStatsModel(100,100,100,100),
+      stats: this.generateStatsModel(10,10,10,10),
       equipment: this.generateStartingEquipment(),
       level: 1
     } as PlayerModel
@@ -127,13 +127,35 @@ export class PlayerStatsComponent implements OnInit {
 
   public playerAttack(magic: boolean)
   {
-    let damage = 50;
+    let damage = 0;
+    let weaponRange = find(this.player.equipment, e => e.type == EquipmentTypeEnum.Weapon).damage;
+    if(weaponRange && !magic)
+    {
+      damage = this.getTotalStats().str + Math.floor(Math.random() * ((weaponRange.max - weaponRange.min) + weaponRange.min));
+    }
+    else if(magic && this.player.mana > 20)
+    {
+      this.player.mana -= 20;
+      damage = this.getTotalStats().int * 2 + Math.floor(Math.random() * this.getTotalStats().int * 2);
+    }
+    
     this.damageEnemy.emit(damage);
   }
 
   public takeDamage(damage: number)
   {
-    this.player.health -= damage;
+    let takenDamage = damage - this.getTotalStats().def;
+    if (takenDamage < damage * 0.2)
+    {
+      takenDamage = Math.floor(damage * 0.2);
+    }
+
+    this.combatLogService.addCombatLine(this.player, {type: CombatActionTypeEnum.PlayerDamage, damageAmount: takenDamage} as CombatActionModel);
+    this.player.health -= takenDamage;
+    if(this.player.health <= 0)
+    {
+      this.playerDies.emit(this.player.name);
+    }
   }
 
   public getClassLevelString(): string

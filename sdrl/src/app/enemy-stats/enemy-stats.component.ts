@@ -4,6 +4,7 @@ import { CombatLogService } from '../combat-log.service';
 import { CombatActionModel } from '../models/combat-action-model';
 import { CombatActionTypeEnum } from '../enums/combat-action-type-enum';
 import { ScoreService } from '../score.service';
+import { NameGeneratorService } from '../name-generator.service';
 
 @Component({
   selector: 'app-enemy-stats',
@@ -14,7 +15,8 @@ export class EnemyStatsComponent implements OnInit {
 
   constructor(
     private combatLogService: CombatLogService,
-    private scoreService: ScoreService
+    private scoreService: ScoreService,
+    private nameGeneratorService: NameGeneratorService
   ) { }
 
   @Output() damagePlayer = new EventEmitter();
@@ -26,15 +28,20 @@ export class EnemyStatsComponent implements OnInit {
     this.generateNewEnemy(1);
   }
 
-  private generateNewEnemy(level: number)
+  private generateNewEnemy(level: number, boss: boolean = false)
   {
-    let health = (Math.floor(Math.random() * 50)+100)*level;
+    let health = (Math.floor(Math.random() * 20)+ 10 * level);
+
+    if(boss)
+    {
+      health *= 10;
+      level *= 2;
+    }
 
     let newEnemy = {
-      name: "Gremlin",
+      name: this.nameGeneratorService.generateEnemyName(boss),
       health: health,
       maxHealth: health,
-      exp: (Math.floor(Math.random() * 50)+20)*level,
       level: level
     } as EnemyModel
 
@@ -61,8 +68,7 @@ export class EnemyStatsComponent implements OnInit {
     {
       this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
       setTimeout(() => {
-        let returnDamage = 50;
-        this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.PlayerDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
+        let returnDamage = Math.floor((Math.random() * 3 * this.enemy.level + 15));
         this.damagePlayer.emit(returnDamage);
         this.enableAttack.emit(null);
       }, 700);

@@ -16,6 +16,8 @@ export class NewGameComponent implements OnInit {
 
   public playerName: string;
   public gameStarted = false;
+  public gameOver = false;
+  public name = '';
 
   @Output() startGame = new EventEmitter();
 
@@ -35,6 +37,17 @@ export class NewGameComponent implements OnInit {
       this.combatLogService.addCustomLine("You awaken in a dark corridor...");
       this.combatLogService.addCustomLine("Venture forth and defeat the 100 Gremlins!");
     }
+  }
+
+  setGameOver(name: string)
+  {
+    this.name = name;
+    this.gameOver = true;
+  }
+
+  getScore()
+  {
+    return this.scoreService.getCurrentScore();
   }
 
 }

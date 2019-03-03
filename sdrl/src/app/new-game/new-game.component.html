@@ -5,4 +5,7 @@
           <button (click)="startNewGame()">Start!</button>
       </div>  
 </div>
-
+<div class="game-over" *ngIf="gameOver">
+    {{name}} has died...<BR>
+    Your score was {{getScore}}!
+</div>
