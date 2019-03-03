@@ -43,7 +43,7 @@ export class NewEquipmentComponent implements OnInit {
     for(let i = 0; i < (2 + Math.floor(Math.random() * 3)); i++)
     {
 
-      let raritySeed = Math.floor(Math.random() * 70) + level;
+      let raritySeed = Math.floor(Math.random() * 60) + level;
       let rarity = RarityTypeEnum.Common;
       let randomStats;
       let randomRange;

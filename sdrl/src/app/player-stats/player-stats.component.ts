@@ -217,8 +217,8 @@ export class PlayerStatsComponent implements OnInit {
     const weaponModel = {
       name: "Rusted Blade",
       damage: {
-        min:10,
-        max:20
+        min:1,
+        max:5
       } as DamageRangeModel,
       type: EquipmentTypeEnum.Weapon,
       stats: this.generateStatsModel(0, 0, 0, 0),
