@@ -139,28 +139,29 @@ export class PlayerStatsComponent implements OnInit {
   public getClassLevelString(): string
   {
     let classString = "Acolyte";
+    const stats = this.getTotalStats();
 
-    if(this.getTotalStats().str > this.getTotalStats().def
-      && this.getTotalStats().str > this.getTotalStats().int
-      && this.getTotalStats().str > this.getTotalStats().mnd)
+    if(stats.str > stats.def
+      && stats.str > stats.int
+      && stats.str > stats.mnd)
       {
         classString = "Warrior";
       }
-    if(this.getTotalStats().int > this.getTotalStats().def
-      && this.getTotalStats().int > this.getTotalStats().str
-      && this.getTotalStats().int > this.getTotalStats().mnd)
+    if(stats.int > stats.def
+      && stats.int > stats.str
+      && stats.int > stats.mnd)
       {
         classString = "Mage";
       }
-    if(this.getTotalStats().def > this.getTotalStats().str
-      && this.getTotalStats().def > this.getTotalStats().int
-      && this.getTotalStats().def > this.getTotalStats().mnd)
+    if(stats.def > stats.str
+      && stats.def > stats.int
+      && stats.def > stats.mnd)
       {
         classString = "Paladin";
       }
-    if(this.getTotalStats().mnd > this.getTotalStats().def
-      && this.getTotalStats().mnd > this.getTotalStats().int
-      && this.getTotalStats().mnd > this.getTotalStats().str)
+    if(stats.mnd > stats.def
+      && stats.mnd > stats.int
+      && stats.mnd > stats.str)
       {
         classString = "Monk";
       }
