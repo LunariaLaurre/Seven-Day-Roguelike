@@ -17,7 +17,8 @@ export class NameGeneratorService {
     'Thicc ',
     'Forgotten ',
     'Holy ',
-    'Wolf-'
+    'Wolf-',
+    'Mistress Cassandra\'s '
   ]
 
   private readonly suffix = [
