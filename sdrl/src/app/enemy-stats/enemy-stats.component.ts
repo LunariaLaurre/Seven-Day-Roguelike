@@ -56,7 +56,8 @@ export class EnemyStatsComponent implements OnInit {
   public takeDamage(damage: number)
   {
     this.enemy.health -= damage;
-
+    this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
+    
     if(this.enemy.health <= 0)
     {
       this.enemyDies();
@@ -66,7 +67,6 @@ export class EnemyStatsComponent implements OnInit {
     }
     else
     {
-      this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
       setTimeout(() => {
         let returnDamage = Math.floor((Math.random() * 3 * this.enemy.level + 15));
         this.damagePlayer.emit(returnDamage);
