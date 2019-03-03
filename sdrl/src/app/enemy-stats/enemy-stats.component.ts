@@ -23,14 +23,16 @@ export class EnemyStatsComponent implements OnInit {
   @Output() generateLoot = new EventEmitter();
   @Output() enableAttack = new EventEmitter();
   public enemy: EnemyModel;
+  public attackingNow = false;
 
   ngOnInit() {
-    this.generateNewEnemy(1);
   }
 
-  private generateNewEnemy(level: number, boss: boolean = false)
+  private generateNewEnemy(level: number)
   {
     let health = (Math.floor(Math.random() * 20)+ 10 * level);
+
+    let boss = level % 10 == 0;
 
     if(boss)
     {
@@ -44,7 +46,12 @@ export class EnemyStatsComponent implements OnInit {
       maxHealth: health,
       level: level
     } as EnemyModel
-
+    
+    this.combatLogService.addCustomLine(newEnemy.name + " appears before you!");
+    
+    setTimeout(() => {
+      this.enableAttack.emit(null);
+    }, 700);
     this.enemy = newEnemy;
   }
 
@@ -61,16 +68,15 @@ export class EnemyStatsComponent implements OnInit {
     if(this.enemy.health <= 0)
     {
       this.enemyDies();
-      setTimeout(() => {
-        this.enableAttack.emit(null);
-      }, 700);
     }
     else
     {
+      this.attackingNow = true;
       setTimeout(() => {
         let returnDamage = Math.floor((Math.random() * 3 * this.enemy.level + 15));
         this.damagePlayer.emit(returnDamage);
         this.enableAttack.emit(null);
+        this.attackingNow = false;
       }, 700);
     }
   }
@@ -81,7 +87,6 @@ export class EnemyStatsComponent implements OnInit {
     this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDeath} as CombatActionModel, this.enemy, null);
     this.generateLoot.emit(this.scoreService.getCurrentProgressLevel())
     this.scoreService.levelUp();
-    this.generateNewEnemy(this.scoreService.getCurrentProgressLevel());
+    this.enemy = null;
   }
-
 }

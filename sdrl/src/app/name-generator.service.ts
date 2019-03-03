@@ -18,12 +18,12 @@ export class NameGeneratorService {
     'Forgotten ',
     'Holy ',
     'Wolf-',
-    'Mistress Cassandra\'s '
+    'Cassandra\'s '
   ]
 
   private readonly suffix = [
     ' of Maiming',
-    ' of the Eleventh Hour',
+    ' of the End',
     ', Gyrls Bane',
     ' of Birds',
     ' of the Scar',

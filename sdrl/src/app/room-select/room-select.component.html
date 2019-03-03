@@ -1,0 +1,9 @@
+<div *ngIf="selectingRoom">
+  <div class="floor">Floor {{getCurrentFloor()}}</div>
+  <div *ngFor="let room of rooms">
+    <div class="room-select" (click)="selectRoom(room)">
+      {{room.name}}
+      <p>{{room.description}}</p>
+    </div>
+  </div>
+</div>

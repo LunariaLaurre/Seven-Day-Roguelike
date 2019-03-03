@@ -10,7 +10,7 @@ export class CombatActionComponent implements OnInit {
 @Output() attack = new EventEmitter();
 @Output() cast = new EventEmitter();
 
-public attackEnabled = true;
+public attackEnabled = false;
 
   constructor() { }
 

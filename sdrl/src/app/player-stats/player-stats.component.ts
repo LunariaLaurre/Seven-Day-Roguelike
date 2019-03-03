@@ -51,8 +51,17 @@ export class PlayerStatsComponent implements OnInit {
   {
     if(this.player)
     {
-      this.player.health = this.player.maxHealth;
-      this.player.mana = this.player.maxMana;
+      this.player.health += this.player.maxHealth/5;
+      this.player.mana += this.player.maxMana/5;
+
+      if(this.player.health > this.player.maxHealth)
+      {
+        this.player.health = this.player.maxHealth;
+      }
+      if(this.player.mana > this.player.maxMana)
+      {
+        this.player.mana = this.player.maxMana;
+      } 
     }
   }
 

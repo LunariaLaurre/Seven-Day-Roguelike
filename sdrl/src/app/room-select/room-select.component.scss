@@ -1,0 +1,29 @@
+.room-select{
+    width:300px;
+    font-family: monospace;
+    font-size:20px;
+    padding:5px;
+    color:#fff;
+    float:right;
+    cursor:pointer;
+    p{
+        font-size:12px;
+    }
+    border:1px solid white;
+    margin:10px;
+}
+
+.room-select:hover{
+    background: #333;
+}
+
+.floor{
+    width:300px;
+    font-family: monospace;
+    font-size:20px;
+    padding:5px;
+    color:#fff;
+    float:right;
+    cursor:pointer;
+    margin:10px;
+}

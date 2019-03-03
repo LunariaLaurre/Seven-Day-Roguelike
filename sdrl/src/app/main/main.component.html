@@ -1,7 +1,8 @@
 <div class="main-body">
-    <app-new-game #menu (startGame)="player.generateNewPlayer($event)"></app-new-game>
+    <app-new-game #menu (startGame)="player.generateNewPlayer($event); room.setSelectingRoom()"></app-new-game>
     <app-player-stats #player (damageEnemy)="enemy.takeDamage($event)" (playerDies)="menu.setGameOver($event)"></app-player-stats>
-    <app-enemy-stats #enemy (damagePlayer)="player.takeDamage($event);" (generateLoot)=" equip.generateRandomEquipment($event);" (enableAttack)="buttons.reEnableAttack();"></app-enemy-stats>
+    <app-room-select #room (healPlayer)="player.healPlayer()" (startBattle)="enemy.generateNewEnemy($event)" (getEquipment)="equip.generateRandomEquipment($event)" ></app-room-select>
+    <app-enemy-stats #enemy (damagePlayer)="player.takeDamage($event);" (generateLoot)=" equip.generateRandomEquipment($event); room.setSelectingRoom()" (enableAttack)="buttons.reEnableAttack();"></app-enemy-stats>
     <app-combat-action #buttons (attack)="player.playerAttack(false)" (cast)="player.playerAttack(true)"></app-combat-action>
     <app-new-equipment #equip (equip)="player.equipToPlayer($event)"></app-new-equipment>
     <app-combat-log #log></app-combat-log>

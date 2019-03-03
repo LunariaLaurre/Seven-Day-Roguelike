@@ -11,6 +11,7 @@ import { EnemyStatsComponent } from './enemy-stats/enemy-stats.component';
 import { NewGameComponent } from './new-game/new-game.component';
 import { FormsModule } from '@angular/forms';
 import { CombatActionComponent } from './combat-action/combat-action.component';
+import { RoomSelectComponent } from './room-select/room-select.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CombatActionComponent } from './combat-action/combat-action.component';
     CombatLogComponent,
     EnemyStatsComponent,
     NewGameComponent,
-    CombatActionComponent
+    CombatActionComponent,
+    RoomSelectComponent
   ],
   imports: [
     BrowserModule,
