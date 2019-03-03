@@ -7,7 +7,7 @@
 </div>
 <div class="game-over" *ngIf="gameOver">
     {{name}} has died...<BR>
-    Your score was {{getScore}}!
+    Your score was {{getScore()}}!
     <div class="new-game-button">
         New Game
     </div>
@@ -15,5 +15,5 @@
 
 <div class="game-over" *ngIf="youWin">
         {{name}} has defeated all the Gremlins!!<BR>
-        Your score is {{getScore}}!
+        Your score is {{getScore()}}!
     </div>
