@@ -32,6 +32,7 @@ export class NewGameComponent implements OnInit {
   {
     if(this.playerName)
     {
+      this.gameOver = false;
       this.scoreService.initiateNewGame();
       this.startGame.emit(this.playerName)
       this.gameStarted = true;

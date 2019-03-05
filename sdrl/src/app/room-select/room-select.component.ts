@@ -76,8 +76,8 @@ export class RoomSelectComponent implements OnInit {
   {
     let rooms = [];
 
-    // If we are on a boss floor, dont gen any non-battle rooms
-    if(this.scoreService.getCurrentProgressLevel() % 10 == 0)
+    // If the next floor is a boss floor, dont gen any non-battle rooms
+    if((this.scoreService.getCurrentProgressLevel() + 1)  % 10 == 0)
     {
       rooms.push(this.generateRoom(RoomTypeEnum.Boss));
       this.rooms = rooms;
@@ -88,13 +88,13 @@ export class RoomSelectComponent implements OnInit {
     {
       let roomSeed = Math.floor(Math.random() * 10);
 
-      if(roomSeed < 3)
-      {
-        rooms.push(this.generateRoom(RoomTypeEnum.Heal));
-      }
-      else if(roomSeed < 6)
+      if(roomSeed < 1)
       {
         rooms.push(this.generateRoom(RoomTypeEnum.Equipment));
+      }
+      else if(roomSeed < 3)
+      {
+        rooms.push(this.generateRoom(RoomTypeEnum.Heal));
       }
       else
       {

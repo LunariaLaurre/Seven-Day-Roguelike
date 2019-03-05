@@ -18,7 +18,14 @@ export class NameGeneratorService {
     'Forgotten ',
     'Holy ',
     'Wolf-',
-    'Cassandra\'s '
+    'Cassandra\'s ',
+    'Feathered ',
+    'Courtney\'s ',
+    'Gay ',
+    'Neon Pink ',
+    'Cute ',
+    'Small ',
+    'Furry '
   ]
 
   private readonly suffix = [
@@ -33,30 +40,63 @@ export class NameGeneratorService {
   private readonly weapons = [
     'Sword',
     'Blade',
-    'Club'
+    'Club',
+    'Wand',
+    'Staff',
+    'Dagger',
+    'Scimitar',
+    'Knife',
+    'Hammer'
   ]
     
   private readonly armors = [
     'Armor',
     'Hide',
-    'Cuirass'
+    'Cuirass',
+    'Plate',
+    'Mail',
+    'Shirt'
   ]
 
   private readonly accessories = [
     'Charm',
     'Ring',
-    'Necklace'
+    'Necklace',
+    'Hat',
+    'Pin',
+    'Ribbon'
   ]
 
   private readonly classes = [
-    'Small',
-    'Smol',
-    'Tiny',
-    'Diminuitive'
+    'Small ',
+    'Smol ',
+    'Tiny ',
+    'Blorpy ',
+    'Weird ',
+    'Noisy ',
+    'Annoying ',
+    'Rude ',
+    'Tired ',
+    'Sleepy ',
+    'Fluffy ',
+    'Brooding ',
+    'Dire ',
+    'Mega- ',
+    'Kinkster ',
+    'Gamer ',
+    'Lady ',
+    'Boy ',
+    'Boi ',
+    'Slimy '
   ]
 
   private readonly bosses = [
-    'Sushi the Thicc'
+    'Big Sushi',
+    'Jasper the Golden',
+    'The Gryphon',
+    'The Furtive Midnight',
+    'Lord of Squirmles',
+    'Tsuchinoko the Real'
   ]
 
 
@@ -92,7 +132,14 @@ export class NameGeneratorService {
     }
 
     const classString = this.classes[Math.floor(Math.random() * this.classes.length)];
-    return classString + " Gremlin"
+    let classString2 = this.classes[Math.floor(Math.random() * this.classes.length)];
+
+    while(classString2 == classString)
+    {
+      classString2 = this.classes[Math.floor(Math.random() * this.classes.length)];
+    }
+
+    return classString + classString2 + "Gremlin"
   }
 
 }
