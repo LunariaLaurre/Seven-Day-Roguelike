@@ -1,5 +1,6 @@
 import { StatisticsModel } from './statistics-model';
 import { AbilityModel } from './ability-model';
+import { EffectModel } from './effect-model';
 
 export class EnemyModel {
     name: string;
@@ -8,5 +9,6 @@ export class EnemyModel {
     maxHealth: number;
     stats: StatisticsModel;
     abilities: AbilityModel[];
+    effects: EffectModel[];
     level: number;
 }

@@ -8,6 +8,9 @@ import { AbilityModel } from './models/ability-model';
 import { EquipmentModel } from './models/equipment-model';
 import { CombatHandlerService } from './combat-handler.service';
 import { CombatLogService } from './combat-log.service';
+import { some } from 'lodash';
+import { EffectModel } from './models/effect-model';
+import { EffectTypeEnum } from './enums/effect-type-enum';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +31,44 @@ export class SupervisorService {
   private playerExp: number;
   private floor: number;
   private combatPhase: CombatPhaseEnum
+  // Combat Functions
+
+  combatBegin()
+  {
+    this.combatPhase = CombatPhaseEnum.OngoingEffects;
+
+    // If player has ongoing effects
+    if(some(this.player.effects))
+    {
+      this.handleEffects(this.player.effects, true);
+    }
+
+    // If enemy has ongoing effects
+    if(some(this.enemy.effects))
+    {
+      this.handleEffects(this.enemy.effects, false);
+    }
+
+  }
+
+  combatPlayerAction()
+  {
+    this.combatPhase = CombatPhaseEnum.PlayerAction;
+  }
+
+  combatEnemyAction()
+  {
+    this.combatPhase = CombatPhaseEnum.EnemyAction;
+  }
+
+  combatCleanup()
+  {
+    this.combatPhase = CombatPhaseEnum.Cleanup;
+  }
+
 
   // Handlers
-  handleEnterRoom(room: RoomTypeEnum)
+  handleEnterRoom(type: RoomTypeEnum)
   {
 
   }
@@ -43,6 +81,22 @@ export class SupervisorService {
     this.enemy = result.enemyStatus;
     this.combatLogService.addLine(result.logLine);
 
+  }
+
+  handleEffects(effects: EffectModel[], targetsPlayer: boolean)
+  {
+    const target: PlayerModel | EnemyModel = targetsPlayer ? this.player : this.enemy;
+
+    for(const effect of effects)
+    {
+      switch(effect.type)
+      {
+        case EffectTypeEnum.Damage:
+          break;
+        default: 
+          break;
+      }
+    }
   }
 
   handleAddEquipment(equip: EquipmentModel)

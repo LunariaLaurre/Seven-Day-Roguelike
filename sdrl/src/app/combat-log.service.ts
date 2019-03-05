@@ -18,6 +18,4 @@ export class CombatLogService {
   {
     return takeRight(this.lines, entries)
   }
-
-
 }

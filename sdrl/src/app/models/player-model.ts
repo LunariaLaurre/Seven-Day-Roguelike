@@ -1,6 +1,7 @@
 import { StatisticsModel } from './statistics-model';
 import { EquipmentModel } from './equipment-model';
 import { AbilityModel } from './ability-model';
+import { EffectModel } from './effect-model';
 
 export class PlayerModel {
     name: string;
@@ -13,5 +14,6 @@ export class PlayerModel {
     stats: StatisticsModel;
     equipment: EquipmentModel[];
     abilities: AbilityModel[];
+    effects: EffectModel[];
     level: number;
 }
