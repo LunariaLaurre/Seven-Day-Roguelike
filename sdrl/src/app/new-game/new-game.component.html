@@ -8,7 +8,7 @@
 <div class="game-over" *ngIf="gameOver">
     {{name}} has died...<BR>
     Your score was {{getScore()}}!
-    <div class="new-game-button">
+    <div class="new-game-button" (click)="startNewGame()">
         New Game
     </div>
 </div>
