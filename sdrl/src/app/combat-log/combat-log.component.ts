@@ -15,9 +15,9 @@ export class CombatLogComponent implements OnInit {
   ngOnInit() {
   }
 
-  getCombatLogLines(): string[]
+  getLines(): string[]
   {
-    return this.combatLogService.getCombatLogEntries(5);
+    return this.combatLogService.getLogEntries(5);
   }
 
 }
