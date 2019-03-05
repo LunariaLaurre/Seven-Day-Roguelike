@@ -81,7 +81,7 @@ export class NameGeneratorService {
     'Fluffy ',
     'Brooding ',
     'Dire ',
-    'Mega- ',
+    'Mega-',
     'Kinkster ',
     'Gamer ',
     'Lady ',
