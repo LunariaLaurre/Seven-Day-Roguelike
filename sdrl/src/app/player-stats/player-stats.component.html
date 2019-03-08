@@ -1,32 +1,32 @@
-<div *ngIf="player" class="player-stats">
-  <div class="player-name">{{ player.name }}</div>
-  <div class="player-level">{{getClassLevelString()}}</div>
+<div *ngIf="getPlayerInfo()" class="player-stats">
+  <div class="player-name">{{ getPlayerInfo().name }}</div>
+  <div class="player-level">{{ getClassLevelString() }}</div>
   <div class="bar-background">
-    <div class="health-bar" [ngStyle]="{'width':getPercentOfMax(player.health, player.maxHealth)}">
-      {{player.health}}
+    <div class="health-bar" [ngStyle]="{'width':getPercentOfMax(getPlayerInfo().health, getPlayerInfo().maxHealth)}">
+      {{ getPlayerInfo().health }}
     </div>
   </div>
   <div class="bar-background">
-      <div class="mana-bar" [ngStyle]="{'width':getPercentOfMax(player.mana, player.maxMana)}">
-        {{player.mana}}
+      <div class="mana-bar" [ngStyle]="{'width':getPercentOfMax(getPlayerInfo().mana, getPlayerInfo().maxMana)}">
+        {{ getPlayerInfo().mana }}
       </div>
     </div>
   <div>
       <div class="stats">
-          Strength: {{getTotalStats().str}}
+          Strength: {{ getTotalStats().str }}
       </div>
       <div class="stats">
-          Intelligence: {{getTotalStats().int}}
+          Intelligence: {{ getTotalStats().int }}
       </div>
       <div class="stats">
-          Defense: {{getTotalStats().def}}
+          Defense: {{ getTotalStats().def }}
       </div>
       <div class="stats">
-          Mind: {{getTotalStats().mnd}}
+          Mind: {{ getTotalStats().mnd }}
       </div>
   </div>
   <div>
-      <div *ngFor="let equip of player.equipment">
+      <div *ngFor="let equip of getPlayerInfo().equipment">
         <app-equipment-display [equip]="equip"></app-equipment-display>
       </div>
   </div>

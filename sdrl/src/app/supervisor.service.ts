@@ -11,6 +11,9 @@ import { CombatLogService } from './combat-log.service';
 import { some } from 'lodash';
 import { EffectModel } from './models/effect-model';
 import { EffectTypeEnum } from './enums/effect-type-enum';
+import { RoomGeneratorService } from './room-generator.service';
+import { PlayerGeneratorService } from './player-generator.service';
+import { EnemyGeneratorService } from './enemy-generator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,10 @@ export class SupervisorService {
 
   constructor(
     private combatHandlerService: CombatHandlerService,
-    private combatLogService: CombatLogService
+    private combatLogService: CombatLogService,
+    private roomGeneratorService: RoomGeneratorService,
+    private playerGeneratorService: PlayerGeneratorService,
+    private enemyGeneratorService: EnemyGeneratorService
   ) { }
 
   // Models
@@ -43,6 +49,15 @@ export class SupervisorService {
       this.handleEffects(this.player.effects, true);
     }
 
+    // If Equipment has ongoing effects
+    for (let equip of this.player.equipment)
+    {
+      if(some(equip.effects))
+      {
+        this.handleEffects(equip.effects, true);
+      }
+    }
+
     // If enemy has ongoing effects
     if(some(this.enemy.effects))
     {
@@ -64,12 +79,29 @@ export class SupervisorService {
   combatCleanup()
   {
     this.combatPhase = CombatPhaseEnum.Cleanup;
+
+    this.floor ++;
+    this.roomGeneratorService.generateRooms(this.floor);
   }
 
 
   // Handlers
+
+  handleNewGame()
+  {
+    this.player = this.playerGeneratorService.generateNewPlayer("Lilth");
+    this.combatPhase = null;
+    this.floor = 1;
+    this.roomGeneratorService.generateRooms(this.floor);
+    
+    this.combatLogService.addLine("You awaken in a dark corridor...");
+    this.combatLogService.addLine("Venture forth into the 100 chambers of the Gremlins!");
+  }
+
   handleEnterRoom(type: RoomTypeEnum)
   {
+    this.rooms = [];
+
 
   }
 
@@ -98,6 +130,7 @@ export class SupervisorService {
       }
     }
   }
+  
 
   handleAddEquipment(equip: EquipmentModel)
   {

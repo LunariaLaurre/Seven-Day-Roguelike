@@ -47,7 +47,6 @@ export class EnemyStatsComponent implements OnInit {
       level: level
     } as EnemyModel
     
-    this.combatLogService.addCustomLine(newEnemy.name + " appears before you!");
     
     setTimeout(() => {
       this.enableAttack.emit(null);
@@ -63,7 +62,6 @@ export class EnemyStatsComponent implements OnInit {
   public takeDamage(damage: number)
   {
     this.enemy.health -= damage;
-    this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDamage, damageAmount: damage} as CombatActionModel, this.enemy, null);
     
     if(this.enemy.health <= 0)
     {
@@ -84,7 +82,6 @@ export class EnemyStatsComponent implements OnInit {
   private enemyDies()
   {
     this.enableAttack.emit(null);
-    this.combatLogService.addCombatLine(null, {type: CombatActionTypeEnum.EnemyDeath} as CombatActionModel, this.enemy, null);
     this.generateLoot.emit(this.scoreService.getCurrentProgressLevel())
     this.scoreService.levelUp();
     this.enemy = null;

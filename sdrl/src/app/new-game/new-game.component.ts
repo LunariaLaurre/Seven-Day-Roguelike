@@ -36,8 +36,6 @@ export class NewGameComponent implements OnInit {
       this.scoreService.initiateNewGame();
       this.startGame.emit(this.playerName)
       this.gameStarted = true;
-      this.combatLogService.addCustomLine("You awaken in a dark corridor...");
-      this.combatLogService.addCustomLine("Venture forth into the 100 chambers of the Gremlins!");
     }
   }
 
